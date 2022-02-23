@@ -165,7 +165,10 @@ public class RNPushNotificationHelper {
 
         // If the fireDate is in past, this will fire immediately and show the
         // notification to the user
-        PendingIntent pendingIntent = toScheduleNotificationIntent(bundle);
+        // PendingIntent pendingIntent = toScheduleNotificationIntent(bundle);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(context, AlarmReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+
 
         if (pendingIntent == null) {
             return;
@@ -455,8 +458,12 @@ public class RNPushNotificationHelper {
 
             int notificationID = Integer.parseInt(notificationIdString);
 
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
+            Log.e("Получено test", "test");
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(context, AlarmReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+
+//            PendingIntent pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
+//                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationManager notificationManager = notificationManager();
 
