@@ -163,10 +163,15 @@ public class RNPushNotificationHelper {
         long fireDate = (long) bundle.getDouble("fireDate");
         boolean allowWhileIdle = bundle.getBoolean("allowWhileIdle");
 
-        // If the fireDate is in past, this will fire immediately and show the
-        // notification to the user
-        // PendingIntent pendingIntent = toScheduleNotificationIntent(bundle);
+        /*
+            OLD:
+            // If the fireDate is in past, this will fire immediately and show the
+            // notification to the user
+            PendingIntent pendingIntent = toScheduleNotificationIntent(bundle);
 
+            NEW:
+            New changes made for new Hi5 Buzzer logic. It start service HeadlessJsTaskService.
+         */
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(context, AlarmReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
 
@@ -458,12 +463,15 @@ public class RNPushNotificationHelper {
 
             int notificationID = Integer.parseInt(notificationIdString);
 
-            Log.e("Получено test", "test");
+            /*
+                OLD:
+                PendingIntent pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
+                NEW:
+                New changes made for new Hi5 Buzzer logic. It start service HeadlessJsTaskService.
+             */
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(context, AlarmReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
-
-//            PendingIntent pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
-//                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationManager notificationManager = notificationManager();
 
