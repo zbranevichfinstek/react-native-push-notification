@@ -1,6 +1,5 @@
 package com.dieam.reactnativepushnotification.modules;
 
-
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Application;
@@ -20,7 +19,14 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent serviceIntent = new Intent(context, AlarmHeadlessJsService.class);
-        context.startService(serviceIntent);
+
+        Application applicationContext = (Application) context.getApplicationContext();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            applicationContext.startForegroundService(serviceIntent);
+        } else {
+            applicationContext.startService(serviceIntent);
+        }
+
         HeadlessJsTaskService.acquireWakeLockNow(context);
     }
 }
