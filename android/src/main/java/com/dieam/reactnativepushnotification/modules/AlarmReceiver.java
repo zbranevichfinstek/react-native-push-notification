@@ -20,14 +20,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent serviceIntent = new Intent(context, AlarmHeadlessJsService.class);
-
         Application applicationContext = (Application) context.getApplicationContext();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            applicationContext.startForegroundService(serviceIntent);
-        } else {
-            applicationContext.startService(serviceIntent);
-        }
-
+        ContextCompat.startForegroundService(applicationContext, serviceIntent);
         HeadlessJsTaskService.acquireWakeLockNow(context);
     }
 }
